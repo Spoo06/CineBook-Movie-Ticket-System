@@ -275,7 +275,10 @@ System.out.println("0. Finish ordering");
         }
 
         int index = choice - 1;
-
+if (snackStock[index] == 0) {
+    System.out.println("Sorry! " + foods[index] + " is out of stock.");
+    continue;
+}
         if (index < 0 || index >= foods.length) {
             System.out.println("Invalid snack selection.");
             continue;
