@@ -349,6 +349,23 @@ for (int i = 0; i < foods.length; i++) {
     }
 }
 
+int totalItems = 0;
+
+for (SnackOrder order : currentOrder) {
+    totalItems += order.quantity;
+}
+
+
+ totalItems = 0;
+
+for (SnackOrder order : currentOrder) {
+    totalItems += order.quantity;
+}
+
+System.out.println("Total Snack Items: " + totalItems);
+
+
+
 
     System.out.println("-------------------------");
     System.out.println("Session Total: Rs." + sessionTotal);
