@@ -322,7 +322,7 @@ if (alreadyOrdered + quantity > MAX_SNACK_QUANTITY) {
         b.snackBill += itemTotal;
         sessionTotal += itemTotal;
 
-        
+   System.out.println("Total different snack selections: " + currentOrder.size());     
 System.out.println("\nSnack added successfully!");
 System.out.println("Selected Item: " + foods[index]);
 System.out.println("Quantity: " + quantity);
