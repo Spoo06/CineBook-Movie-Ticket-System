@@ -238,25 +238,58 @@ public class CineBook {
     }
 
     // Member 2: Snacks and food ordering
-    static void orderSnacks() throws BookingNotFoundException {
-        Booking b = findBooking(number("Booking ID: "));
+    
+static void orderSnacks() throws BookingNotFoundException {
 
-        for (int i = 0; i < foods.length; i++)
+    Booking b = findBooking(number("Booking ID: "));
+
+    int choice;
+
+    while (true) {
+
+        System.out.println("\n=== AVAILABLE SNACKS ===");
+
+        for (int i = 0; i < foods.length; i++) {
             System.out.println((i + 1) + ". " + foods[i]
-                + " Rs." + foodPrices[i]);
-
-        int i = number("Snack number: ") - 1;
-        int q = number("Quantity: ");
-
-        if (i < 0 || i >= foods.length || q <= 0) {
-            System.out.println("Invalid snack order.");
-            return;
+                    + " - Rs." + foodPrices[i]);
         }
 
-        snackQueue.enqueue(new SnackOrder(b.id, foods[i], q));
+        System.out.println("0. Finish ordering");
+
+        choice = number("Select snack: ");
+
+        if (choice == 0) {
+            break;
+        }
+
+        int i = choice - 1;
+
+        if (i < 0 || i >= foods.length) {
+            System.out.println("Invalid snack selection.");
+            continue;
+        }
+
+        int q = number("Enter quantity: ");
+
+        if (q <= 0) {
+            System.out.println("Quantity must be positive.");
+            continue;
+        }
+
+        snackQueue.enqueue(
+                new SnackOrder(b.id, foods[i], q)
+        );
+
         b.snackBill += foodPrices[i] * q;
-        System.out.println("Snack added. Total: Rs." + b.total());
+
+        System.out.println("Snack added successfully!");
+        System.out.println("Current snack bill: Rs."
+                + b.snackBill);
     }
+
+    System.out.println("Final snack bill: Rs." + b.snackBill);
+}
+
 
     // Process snack orders using FIFO
     static void processSnack() {
