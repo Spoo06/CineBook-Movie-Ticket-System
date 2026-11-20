@@ -298,22 +298,25 @@ static void orderSnacks() throws BookingNotFoundException {
         System.out.println("No snacks ordered.");
     }
 
+    
+for (int i = 0; i < foods.length; i++) {
+
+    int totalQuantity = 0;
+
     for (SnackOrder order : currentOrder) {
-
-        int index = 0;
-
-        for (int i = 0; i < foods.length; i++) {
-            if (foods[i].equals(order.item)) {
-                index = i;
-                break;
-            }
+        if (order.item.equals(foods[i])) {
+            totalQuantity += order.quantity;
         }
-
-        int itemTotal = foodPrices[index] * order.quantity;
-
-        System.out.println(order.item + " x "
-                + order.quantity + " = Rs." + itemTotal);
     }
+
+    if (totalQuantity > 0) {
+        int itemTotal = foodPrices[i] * totalQuantity;
+
+        System.out.println(foods[i] + " x "
+                + totalQuantity + " = Rs." + itemTotal);
+    }
+}
+
 
     System.out.println("-------------------------");
     System.out.println("Session Total: Rs." + sessionTotal);
