@@ -12,7 +12,7 @@ public class CineBook {
     static String[] foods = {"Popcorn", "Coke", "Nachos"};
     static int[] foodPrices = {120, 80, 150};
     static int[] snackStock = {50, 50, 30};
-
+    static final int MAX_SNACK_QUANTITY = 10;
     // Abstraction
     static abstract class Ticket {
         abstract int price();
@@ -275,14 +275,17 @@ System.out.println("0. Finish ordering");
         }
 
         int index = choice - 1;
+
+// Validate snack selection before accessing arrays
+if (index < 0 || index >= foods.length) {
+    System.out.println("Invalid snack selection.");
+    continue;
+}
+
 if (snackStock[index] == 0) {
     System.out.println("Sorry! " + foods[index] + " is out of stock.");
     continue;
 }
-        if (index < 0 || index >= foods.length) {
-            System.out.println("Invalid snack selection.");
-            continue;
-        }
 
         int quantity = number("Enter quantity: ");
 
@@ -294,7 +297,7 @@ if (quantity > snackStock[index]) {
     System.out.println("Sorry! Only " + snackStock[index] + " available.");
     continue;
 }
-snackStock[index] -= quantity;
+
 int alreadyOrdered = 0;
 
 for (SnackOrder existing : currentOrder) {
@@ -309,6 +312,7 @@ if (alreadyOrdered + quantity > MAX_SNACK_QUANTITY) {
     System.out.println("Maximum allowed: " + MAX_SNACK_QUANTITY);
     continue;
 }
+snackStock[index] -= quantity;
 
 
         SnackOrder order = new SnackOrder(
