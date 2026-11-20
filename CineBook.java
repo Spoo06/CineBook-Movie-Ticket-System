@@ -287,6 +287,22 @@ System.out.println("0. Finish ordering");
             continue;
         }
 
+int alreadyOrdered = 0;
+
+for (SnackOrder existing : currentOrder) {
+    if (existing.item.equals(foods[index])) {
+        alreadyOrdered += existing.quantity;
+    }
+}
+
+if (alreadyOrdered + quantity > MAX_SNACK_QUANTITY) {
+    System.out.println("Order limit exceeded!");
+    System.out.println("Already ordered: " + alreadyOrdered);
+    System.out.println("Maximum allowed: " + MAX_SNACK_QUANTITY);
+    continue;
+}
+
+
         SnackOrder order = new SnackOrder(
                 b.id, foods[index], quantity);
 
