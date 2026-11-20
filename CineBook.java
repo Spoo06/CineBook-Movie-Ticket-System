@@ -374,19 +374,36 @@ System.out.println("Total Snack Items: " + totalItems);
 
 
 // Process snack orders using FIFO
+
 static void processSnack() {
 
     SnackOrder s = snackQueue.dequeue();
 
     if (s == null) {
         System.out.println("No pending snack orders.");
-    } else {
-        System.out.println("Snack order served successfully!");
-        System.out.println("Item: " + s.item);
-        System.out.println("Quantity: " + s.quantity);
-        System.out.println("Booking ID: " + s.bookingId);
+        return;
     }
+
+    System.out.println("\n===== SNACK SERVING DETAILS =====");
+    System.out.println("Booking ID: " + s.bookingId);
+    System.out.println("Snack Name: " + s.item);
+    System.out.println("Quantity: " + s.quantity);
+
+    int price = 0;
+
+    for (int i = 0; i < foods.length; i++) {
+        if (foods[i].equals(s.item)) {
+            price = foodPrices[i];
+            break;
+        }
+    }
+
+    System.out.println("Price per item: Rs." + price);
+    System.out.println("Total Amount: Rs." + (price * s.quantity));
+    System.out.println("Status: Successfully Served");
+    System.out.println("================================");
 }
+
 
     // Discounts and offers
     static void applyDiscount() throws BookingNotFoundException {
