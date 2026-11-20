@@ -11,6 +11,7 @@ public class CineBook {
     static int nextId = 1001;
     static String[] foods = {"Popcorn", "Coke", "Nachos"};
     static int[] foodPrices = {120, 80, 150};
+    static int[] snackStock = {50, 50, 30};
 
     // Abstraction
     static abstract class Ticket {
@@ -286,7 +287,11 @@ System.out.println("0. Finish ordering");
             System.out.println("Quantity must be positive.");
             continue;
         }
-
+if (quantity > snackStock[index]) {
+    System.out.println("Sorry! Only " + snackStock[index] + " available.");
+    continue;
+}
+snackStock[index] -= quantity;
 int alreadyOrdered = 0;
 
 for (SnackOrder existing : currentOrder) {
