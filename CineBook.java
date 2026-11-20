@@ -298,7 +298,14 @@ System.out.println("0. Finish ordering");
         b.snackBill += itemTotal;
         sessionTotal += itemTotal;
 
-        System.out.println("Snack added successfully!");
+        
+System.out.println("\nSnack added successfully!");
+System.out.println("Selected Item: " + foods[index]);
+System.out.println("Quantity: " + quantity);
+System.out.println("Price per item: Rs." + foodPrices[index]);
+System.out.println("Total Price: Rs." + itemTotal);
+System.out.println("-----------------------------");
+
     }
 
     System.out.println("\n=== SNACK ORDER SUMMARY ===");
