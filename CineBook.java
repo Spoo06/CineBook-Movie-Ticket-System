@@ -251,10 +251,19 @@ static void orderSnacks() throws BookingNotFoundException {
 
         System.out.println("\n=== AVAILABLE SNACKS ===");
 
-        for (int i = 0; i < foods.length; i++) {
-            System.out.println((i + 1) + ". " + foods[i]
-                    + " - Rs." + foodPrices[i]);
-        }
+        
+System.out.println("\n========== SNACK MENU ==========");
+System.out.printf("%-5s %-15s %s%n", "No.", "Snack", "Price");
+System.out.println("--------------------------------");
+
+for (int i = 0; i < foods.length; i++) {
+    System.out.printf("%-5d %-15s Rs.%d%n",
+            i + 1, foods[i], foodPrices[i]);
+}
+
+System.out.println("--------------------------------");
+System.out.println("0. Finish ordering");
+
 
         System.out.println("0. Finish ordering");
 
