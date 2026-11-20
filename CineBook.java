@@ -337,21 +337,9 @@ System.out.println("-----------------------------");
 
     
 for (int i = 0; i < foods.length; i++) {
-
-    int totalQuantity = 0;
-
-    for (SnackOrder order : currentOrder) {
-        if (order.item.equals(foods[i])) {
-            totalQuantity += order.quantity;
-        }
-    }
-
-    if (totalQuantity > 0) {
-        int itemTotal = foodPrices[i] * totalQuantity;
-
-        System.out.println(foods[i] + " x "
-                + totalQuantity + " = Rs." + itemTotal);
-    }
+    System.out.println((i + 1) + ". " + foods[i]
+            + " - Rs." + foodPrices[i]
+            + " (Available: " + snackStock[i] + ")");
 }
 
 int totalItems = 0;
