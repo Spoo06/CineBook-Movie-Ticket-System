@@ -239,11 +239,13 @@ public class CineBook {
 
     // Member 2: Snacks and food ordering
     
+
 static void orderSnacks() throws BookingNotFoundException {
 
     Booking b = findBooking(number("Booking ID: "));
 
-    int choice;
+    ArrayList<SnackOrder> currentOrder = new ArrayList<>();
+    int sessionTotal = 0;
 
     while (true) {
 
@@ -256,49 +258,83 @@ static void orderSnacks() throws BookingNotFoundException {
 
         System.out.println("0. Finish ordering");
 
-        choice = number("Select snack: ");
+        int choice = number("Select snack: ");
 
         if (choice == 0) {
             break;
         }
 
-        int i = choice - 1;
+        int index = choice - 1;
 
-        if (i < 0 || i >= foods.length) {
+        if (index < 0 || index >= foods.length) {
             System.out.println("Invalid snack selection.");
             continue;
         }
 
-        int q = number("Enter quantity: ");
+        int quantity = number("Enter quantity: ");
 
-        if (q <= 0) {
+        if (quantity <= 0) {
             System.out.println("Quantity must be positive.");
             continue;
         }
 
-        snackQueue.enqueue(
-                new SnackOrder(b.id, foods[i], q)
-        );
+        SnackOrder order = new SnackOrder(
+                b.id, foods[index], quantity);
 
-        b.snackBill += foodPrices[i] * q;
+        currentOrder.add(order);
+        snackQueue.enqueue(order);
+
+        int itemTotal = foodPrices[index] * quantity;
+
+        b.snackBill += itemTotal;
+        sessionTotal += itemTotal;
 
         System.out.println("Snack added successfully!");
-        System.out.println("Current snack bill: Rs."
-                + b.snackBill);
     }
 
-    System.out.println("Final snack bill: Rs." + b.snackBill);
+    System.out.println("\n=== SNACK ORDER SUMMARY ===");
+
+    if (currentOrder.isEmpty()) {
+        System.out.println("No snacks ordered.");
+    }
+
+    for (SnackOrder order : currentOrder) {
+
+        int index = 0;
+
+        for (int i = 0; i < foods.length; i++) {
+            if (foods[i].equals(order.item)) {
+                index = i;
+                break;
+            }
+        }
+
+        int itemTotal = foodPrices[index] * order.quantity;
+
+        System.out.println(order.item + " x "
+                + order.quantity + " = Rs." + itemTotal);
+    }
+
+    System.out.println("-------------------------");
+    System.out.println("Session Total: Rs." + sessionTotal);
+    System.out.println("Booking Snack Bill: Rs." + b.snackBill);
 }
 
 
-    // Process snack orders using FIFO
-    static void processSnack() {
-        SnackOrder s = snackQueue.dequeue();
+// Process snack orders using FIFO
+static void processSnack() {
 
-        System.out.println(s == null ? "No pending orders." :
-            "Served " + s.quantity + " x " + s.item
-            + " for booking " + s.bookingId);
+    SnackOrder s = snackQueue.dequeue();
+
+    if (s == null) {
+        System.out.println("No pending snack orders.");
+    } else {
+        System.out.println("Snack order served successfully!");
+        System.out.println("Item: " + s.item);
+        System.out.println("Quantity: " + s.quantity);
+        System.out.println("Booking ID: " + s.bookingId);
     }
+}
 
     // Discounts and offers
     static void applyDiscount() throws BookingNotFoundException {
